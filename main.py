@@ -28,7 +28,7 @@ def deletar_pessoas(id:str):
 @app.get("/Pessoas")
 def ver_pessoas():
     conexao.commit()
-    
+
     cursor.execute('SELECT * FROM pessoas')
     pessoas = [linha for linha in cursor.fetchall()]
 
