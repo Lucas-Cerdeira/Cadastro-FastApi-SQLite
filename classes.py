@@ -2,7 +2,7 @@ import sqlite3
 
 
 class User:
-    def __init__(self, nome: str, idade: str, cidade: str):
+    def __init__(self, nome: str, idade: int, cidade: str):
         self._nome = nome
         self._idade = idade
         self._cidade = cidade
@@ -19,8 +19,8 @@ class User:
     def cidade(self):
         return self._cidade
 
+
 class DataBase:
-    import sqlite3
 
     def __init__(self):
         self.conexao = sqlite3.connect('basededados.db')
@@ -30,11 +30,23 @@ class DataBase:
         self.cursor.execute('INSERT INTO pessoas Values (nome:, idade:, cidade:)',
                             {'nome': pessoa.nome, 'idade': pessoa.idade, 'cidade': pessoa.cidade})
 
+        self.conexao.commit()
+
         self.cursor.close()
         self.conexao.close()
 
     def ver_pessoas(self):
+        self.conexao.commit()
+
         self.cursor.execute('SELECT * FROM pessoas')
+        pessoas = []
+        for linha in self.cursor.fetchall():
+            pessoas.append(linha)
+
+        self.cursor.close()
+        self.conexao.close()
+
+        return pessoas
 
 
 
